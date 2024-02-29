@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Social Media Homepage</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      .navbar {
+        background-color: #4267b2; /* Facebook Blue */
+      }
+      .profile-img {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+      }
+      .post {
+        margin-bottom: 20px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        padding: 20px;
+      }
+      .nav-link {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+      .cont_userName {
+        font-size: 20px;
+        top: 10px;
+        position: relative;
+        text-transform: capitalize;
+      }
+      a {
+        text-decoration: none;
+        color: #000;
+      }
+      a:hover {
+        text-decoration: none;
+        color: #000;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+      <div class="container">
+        <a class="navbar-brand" href="#">Social Media</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="#">
+                <img
+                  src="<%= userImage %>"
+                  alt="<%= userId %>"
+                  class="profile-img"
+                />
+                <p class="cont_userName"><%= userName%></p>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mt-5">
+      <!-- Post Form -->
+      <form>
+        <div class="form-group">
+          <textarea
+            class="form-control"
+            rows="3"
+            placeholder="What's on your mind?"
+          ></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Post</button>
+      </form>
+
+      <!-- Posts -->
+      <div class="mt-4">
+        <!-- Iterate over each post -->
+        <% posts.forEach(post => { %>
+        <div class="post">
+          <a href="/post/<%= post.post_id%>">
+            <div class="d-flex align-items-center">
+              <img
+                src="<%= post.owner_image %>"
+                alt="<%= userId %>"
+                class="profile-img mr-3"
+              />
+              <p class="user_name mb-0"><strong><%= post.owner%></strong></p>
+            </div>
+            <p class="mt-2"><%= post.title %></p>
+            <!-- Display number of likes and comments -->
+            <p>Likes: <%= post.like_count %></p>
+            <form action="/like" method="post">
+              <p>Post ID : <%= post.post_id%></p>
+              <input type="hidden" name="<%= post.post_id%>" />
+
+              <button type="submit">Like</button>
+            </form>
+            <p>Comments: <%= post.comment_count %></p>
+            <!-- Add more post details here -->
+          </a>
+        </div>
+        <% }); %>
+      </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  </body>
+</html>
